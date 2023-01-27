@@ -15,11 +15,13 @@ class Playground extends Command
     {
         $service = new FipeApiService();
 
-        $service->ofType('carros')
+        $response = $service->ofType('carros')
             ->ofBrand('44')
             ->ofModel('4722')
             ->ofYear('2010-1')
             ->get();
+
+        dd($response);
 
         return Command::SUCCESS;
     }

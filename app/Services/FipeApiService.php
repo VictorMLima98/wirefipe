@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Http\{JsonResponse, Response};
+use Illuminate\Support\Facades\Http;
 
 class FipeApiService
 {
@@ -56,10 +57,23 @@ class FipeApiService
         return $this;
     }
 
-    public function get()
+    public function get(): JsonResponse | array
     {
         try {
-            $url = self::BASE_URL . $this->type . '/marcas/' . $this->brand . '/modelos/' . $this->model . '/anos/' . $this->year;
+            $url = self::BASE_URL .
+                $this->type . '/marcas/' .
+                $this->brand . '/modelos/' .
+                $this->model . '/anos/' . $this->year;
+
+            $response = Http::get($url)->json();
+
+            if (!$response) {
+                return new JsonResponse([
+                    'message' => 'Invalid request',
+                ], Response::HTTP_BAD_REQUEST);
+            }
+
+            return $response;
         } catch (\Throwable $th) {
             report($th);
 
