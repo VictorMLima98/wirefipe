@@ -1,10 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-	presets: [
-		require('./vendor/wireui/wireui/tailwind.config.js')
-	],
 	content: [
-		'./src/**/*.{html,js}',
+		"./resources/**/*.blade.php",
+		"./resources/**/*.js",
 		'./vendor/wireui/wireui/resources/**/*.blade.php',
 		'./vendor/wireui/wireui/ts/**/*.ts',
 		'./vendor/wireui/wireui/src/View/**/*.php'
@@ -12,5 +10,12 @@ module.exports = {
 	theme: {
 		extend: {},
 	},
-	plugins: [],
+	presets: [
+		require('./vendor/wireui/wireui/tailwind.config.js')
+	],
+	plugins: [
+		require('@tailwindcss/forms'),
+		require('@tailwindcss/typography'),
+		require('@tailwindcss/aspect-ratio')
+	],
 }
