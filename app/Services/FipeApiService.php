@@ -9,6 +9,12 @@ class FipeApiService
 {
     public const BASE_URL = 'https://parallelum.com.br/fipe/api/v1/';
 
+    private const BRANDS_URI = 'marcas';
+
+    private const MODELS_URI = 'modelos';
+
+    private const YEARS_URI = 'anos';
+
     public const ACCEPTED_TYPES = [
         'carros',
         'motos',
@@ -60,10 +66,7 @@ class FipeApiService
     public function get(): JsonResponse | array
     {
         try {
-            $url = self::BASE_URL .
-                $this->type . '/marcas/' .
-                $this->brand . '/modelos/' .
-                $this->model . '/anos/' . $this->year;
+            $url = $this->buildUrl();
 
             $response = Http::get($url)->json();
 
@@ -79,5 +82,28 @@ class FipeApiService
 
             throw $th;
         }
+    }
+
+    private function buildUrl(): ?string
+    {
+        $url = self::BASE_URL;
+
+        if ($this->type) {
+            $url .= $this->type . '/' . self::BRANDS_URI;
+        }
+
+        if ($this->brand) {
+            $url .= '/' . $this->brand . '/' . self::MODELS_URI;
+        }
+
+        if ($this->model) {
+            $url .= '/' . $this->model . '/' . self::YEARS_URI;
+        }
+
+        if ($this->year) {
+            $url .= '/' . $this->year;
+        }
+
+        return $url;
     }
 }
