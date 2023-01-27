@@ -17,14 +17,14 @@
             </div>
             <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div class="hidden sm:ml-6 sm:flex sm:space-x-8 text-lg">
-                    <a href="#"
-                        class="inline-flex items-center border-b-2 border-primary-500 px-1 pt-1 font-medium text-secondary-900">Home</a>
-                    <a href="#"
-                        class="inline-flex items-center border-b-2 border-transparent px-1 pt-1 font-medium text-secondary-500 hover:border-secondary-300 hover:text-secondary-700">Carros</a>
-                    <a href="#"
-                        class="inline-flex items-center border-b-2 border-transparent px-1 pt-1 font-medium text-secondary-500 hover:border-secondary-300 hover:text-secondary-700">Motos</a>
-                    <a href="#"
-                        class="inline-flex items-center border-b-2 border-transparent px-1 pt-1 font-medium text-secondary-500 hover:border-secondary-300 hover:text-secondary-700">Caminhões</a>
+                    @foreach ($links as $link)
+                        <a href="{{ $link['href'] }}" @class([
+                            'inline-flex items-center border-b-2 border-primary-500 text-secondary-900' => $link['active'],
+                            'border-transparent text-secondary-500 hover:border-secondary-300 hover:text-secondary-700' => !$link['active'],
+                            'inline-flex items-center border-b-2 px-1 pt-1 font-medium'])>
+                            {{ $link['label'] }}
+                        </a>
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -32,15 +32,15 @@
 
     <div class="sm:hidden" id="mobile-menu" x-show="mobileMenu" x-cloak x-transition>
         <div class="space-y-1 pt-2 pb-4">
-            <!-- Current: "bg-primary-50 border-primary-500 text-primary-700", Default: "border-transparent text-secondary-500 hover:bg-secondary-50 hover:border-secondary-300 hover:text-secondary-700" -->
-            <a href="#"
-                class="block border-l-4 border-primary-500 bg-primary-50 py-2 pl-3 pr-4 text-base font-medium text-primary-700">Home</a>
-            <a href="#"
-                class="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-secondary-500 hover:border-secondary-300 hover:bg-secondary-50 hover:text-secondary-700">Carros</a>
-            <a href="#"
-                class="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-secondary-500 hover:border-secondary-300 hover:bg-secondary-50 hover:text-secondary-700">Motos</a>
-            <a href="#"
-                class="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-secondary-500 hover:border-secondary-300 hover:bg-secondary-50 hover:text-gray-700">Caminhões</a>
+            @foreach ($links as $link)
+                <a href="{{ $link['active'] }}"
+                    @class([
+                        'border-primary-500 bg-primary-50 text-primary-700' => $link['active'],
+                        'border-transparent text-secondary-500 hover:border-secondary-300 hover:bg-secondary-50 hover:text-secondary-700' => !$link['active'],
+                        'block border-l-4 py-2 pl-3 pr-4 text-base font-medium'])>
+                    {{ $link['label'] }}
+                </a>
+            @endforeach
         </div>
     </div>
 </nav>
