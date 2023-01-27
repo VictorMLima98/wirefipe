@@ -6,13 +6,21 @@ use Livewire\Component;
 
 class VehicleChooser extends Component
 {
-    public ?string $type = null;
+    public const NOT_SELECTED = 'not_selected';
 
-    public ?string $brand = null;
+    public const TYPE_CARS = 'cars';
 
-    public ?string $name = null;
+    public const TYPE_BIKES = 'bikes';
 
-    public ?string $year = null;
+    public const TYPE_TRUCKS = 'trucks';
+
+    public ?string $type = self::NOT_SELECTED;
+
+    public ?string $brand = self::NOT_SELECTED;
+
+    public ?string $name = self::NOT_SELECTED;
+
+    public ?string $year = self::NOT_SELECTED;
 
     public function render()
     {
