@@ -2,8 +2,7 @@
 
 namespace App\View\Components;
 
-use Illuminate\View\Component;
-use Illuminate\View\View;
+use Illuminate\View\{Component, View};
 
 class Header extends Component
 {
@@ -13,20 +12,20 @@ class Header extends Component
     {
         $this->links = [
             [
-                'label' => 'Home',
-                'href' => '#',
+                'label'  => 'Home',
+                'href'   => '#',
                 'active' => request()->is('/'),
             ], [
-                'label' => 'Carros',
-                'href' => '#',
+                'label'  => 'Carros',
+                'href'   => '#',
                 'active' => false,
             ], [
-                'label' => 'Motos',
-                'href' => '#',
+                'label'  => 'Motos',
+                'href'   => '#',
                 'active' => false,
             ], [
-                'label' => 'Caminhões',
-                'href' => '#',
+                'label'  => 'Caminhões',
+                'href'   => '#',
                 'active' => false,
             ],
         ];

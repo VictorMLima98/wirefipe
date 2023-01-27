@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use Illuminate\View\View;
 use Livewire\Component;
 
 class VehicleChooser extends Component
@@ -22,7 +23,7 @@ class VehicleChooser extends Component
 
     public ?string $year = self::NOT_SELECTED;
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.vehicle-chooser');
     }
