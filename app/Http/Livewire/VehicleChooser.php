@@ -27,6 +27,12 @@ class VehicleChooser extends Component
 
     public array $brands = [];
 
+    public array $models = [];
+
+    public array $years = [];
+
+    public ?array $fipeResponse = null;
+
     public function updatedType(): void
     {
         if ($this->type === self::NOT_SELECTED) {
@@ -40,6 +46,68 @@ class VehicleChooser extends Component
             'id'   => $brand['codigo'],
             'name' => $brand['nome'],
         ])->toArray();
+    }
+
+    public function updatedBrand(): void
+    {
+        if ($this->brand === self::NOT_SELECTED) {
+            return;
+        }
+
+        $this->models = collect(
+            Cache::rememberForever(
+                "models::{$this->type}::{$this->brand}",
+                fn () => Fipe::ofType($this->type)->ofBrand($this->brand)->get()
+            )['modelos']
+        )->map(fn (array $model) => [
+            'id'   => $model['codigo'],
+            'name' => $model['nome'],
+        ])->toArray();
+    }
+
+    public function updatedModel(): void
+    {
+        if ($this->model === self::NOT_SELECTED) {
+            return;
+        }
+
+        $this->years = collect(
+            Cache::rememberForever(
+                "years::{$this->type}::{$this->brand}::{$this->model}",
+                fn () => Fipe::ofType($this->type)->ofBrand($this->brand)->ofModel($this->model)->get()
+            )
+        )->map(fn (array $year) => [
+            'id'   => $year['codigo'],
+            'name' => $year['nome'],
+        ])->toArray();
+    }
+
+    public function updatedYear(): void
+    {
+        if ($this->year === self::NOT_SELECTED) {
+            return;
+        }
+
+        $fipe = collect(
+            Cache::rememberForever(
+                "fipe::{$this->type}::{$this->brand}::{$this->model}::{$this->year}",
+                fn () => Fipe::ofType($this->type)->ofBrand($this->brand)->ofModel($this->model)->ofYear($this->year)->get()
+            )
+        );
+
+        $sanitizedFipe = [];
+
+        $sanitizedFipe['price']            = $fipe['Valor'];
+        $sanitizedFipe['brand']            = $fipe['Marca'];
+        $sanitizedFipe['model']            = $fipe['Modelo'];
+        $sanitizedFipe['year']             = $fipe['AnoModelo'];
+        $sanitizedFipe['fuel_id']          = $fipe['SiglaCombustivel'];
+        $sanitizedFipe['fuel_description'] = $fipe['Combustivel'];
+        $sanitizedFipe['fipe_id']          = $fipe['CodigoFipe'];
+        $sanitizedFipe['fipe_period']      = $fipe['MesReferencia'];
+        $sanitizedFipe['vehicle_type']     = $fipe['TipoVeiculo'];
+
+        $this->fipe = $sanitizedFipe;
     }
 
     public function render(): View

@@ -18,17 +18,17 @@
     <div class="basis-1/4">
         <x-native-select :disabled="$type === self::NOT_SELECTED || $brand === self::NOT_SELECTED" class="bg-secondary-900 text-primary-50 text-base md:!text-lg" wire:model="model">
             <option value="{{ self::NOT_SELECTED }}">Modelo</option>
-            <option>Carros</option>
-            <option>Motos</option>
-            <option>Caminhões</option>
+            @foreach ($models as $selectableModel)
+                <option value="{{ $selectableModel['id'] }}">{{ $selectableModel['name'] }}</option>
+            @endforeach
         </x-native-select>
     </div>
     <div>
         <x-native-select :disabled="$type === self::NOT_SELECTED || $brand === self::NOT_SELECTED || $model === self::NOT_SELECTED" class="bg-secondary-900 text-primary-50 text-base md:!text-lg" wire:model="year">
             <option value="{{ self::NOT_SELECTED }}">Ano</option>
-            <option>Carros</option>
-            <option>Motos</option>
-            <option>Caminhões</option>
+            @foreach ($years as $selectableYear)
+                <option value="{{ $selectableYear['id'] }}">{{ $selectableYear['name'] }}</option>
+            @endforeach
         </x-native-select>
     </div>
 </div>
