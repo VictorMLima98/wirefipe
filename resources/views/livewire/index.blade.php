@@ -10,6 +10,9 @@
             <div>
                 <livewire:vehicle-chooser />
             </div>
+            <div>
+                <livewire:fipe-information />
+            </div>
         </div>
     </div>
 </div>

@@ -10,10 +10,14 @@
     @livewireStyles
 </head>
 
-<body class="antialiased">
+<body class="antialiased bg-secondary-900 h-screen flex flex-col">
     <x-header />
 
-    {{ $slot }}
+    <div class="flex-grow">
+        {{ $slot }}
+    </div>
+
+    <x-footer />
     
     <wireui:scripts />
     @vite('resources/js/app.js')

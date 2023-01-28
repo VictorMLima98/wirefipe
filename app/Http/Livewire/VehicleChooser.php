@@ -31,8 +31,6 @@ class VehicleChooser extends Component
 
     public array $years = [];
 
-    public ?array $fipeResponse = null;
-
     public function updatedType(): void
     {
         if ($this->type === self::NOT_SELECTED) {
@@ -107,7 +105,7 @@ class VehicleChooser extends Component
         $sanitizedFipe['fipe_period']      = $fipe['MesReferencia'];
         $sanitizedFipe['vehicle_type']     = $fipe['TipoVeiculo'];
 
-        $this->fipe = $sanitizedFipe;
+        $this->emitTo('fipe-information', 'fipe::retrieved', $sanitizedFipe);
     }
 
     public function render(): View
