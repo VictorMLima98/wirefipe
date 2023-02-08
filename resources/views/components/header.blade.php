@@ -14,9 +14,15 @@
                             d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                     </svg>
                 </button>
+                <div class="flex py-2 justify-end">
+                    <img class="object-fill w-1/2" src="{{ asset('assets/static/logo-no-background.svg') }}" alt="Logo">
+                </div>
             </div>
             <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div class="hidden sm:ml-6 sm:flex sm:space-x-8 text-lg">
+                    <div class="flex py-2">
+                        <img class="object-fill" src="{{ asset('assets/static/logo-no-background.svg') }}" alt="Logo">
+                    </div>
                     @foreach ($links as $link)
                         <a href="{{ $link['href'] }}" @class([
                             'inline-flex items-center border-b-2 border-primary-500 text-secondary-50' => $link['active'],

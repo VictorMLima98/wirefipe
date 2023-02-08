@@ -10,7 +10,7 @@ module.exports = {
 	theme: {
 		extend: {
 			fontFamily: {
-				sans: ['Lato', 'sans-serif']
+				sans: ['Cabin', 'sans-serif']
 			},
 			colors: {
 				primary: {
