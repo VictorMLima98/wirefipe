@@ -1,0 +1,22 @@
+#!/bin/bash
+
+set -e;
+
+if [ ! -d "$STORAGE_DIRECTORY/app" ]; then
+    mkdir $STORAGE_DIRECTORY/app;
+    mkdir $STORAGE_DIRECTORY/app/public;
+fi;
+
+ln -s $STORAGE_DIRECTORY/app $APPLICATION_ROOT/storage/app;
+
+
+if [ -d "$APPLICATION_ROOT/storage/logs" ]; then
+    rm -rf $APPLICATION_ROOT/storage/logs;
+fi
+
+if [ ! -d "$STORAGE_DIRECTORY/logs" ]; then
+    mkdir $STORAGE_DIRECTORY/logs;
+fi;
+
+ln -s $STORAGE_DIRECTORY/logs $APPLICATION_ROOT/storage/logs;
+ln -s --no-dereference $APPLICATION_ROOT/storage/app/public $APPLICATION_ROOT/public/storage

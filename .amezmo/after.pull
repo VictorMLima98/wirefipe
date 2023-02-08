@@ -1,0 +1,12 @@
+#!/bin/bash
+
+set -e;
+
+if [ $ENVIRONMENT_NAME = 'production' ]; then
+    composer2 --no-ansi --no-interaction --optimize-autoloader --no-progress --profile --no-cache --no-dev install;
+    php artisan migrate --force
+fi
+
+npm cache clear --force
+npm install
+npm run build
