@@ -1,7 +1,6 @@
 <div class="overflow-hidden bg-secondary-900 shadow sm:rounded-lg" x-data="{
     fipe: @entangle('fipe')
 }" x-show="fipe" x-cloak x-transition>
-{{-- @dump($fipe) --}}
     @if ($fipe)
     <div class="px-4 py-5 sm:px-6 flex flex-col justify-center items-center">
         <div>
