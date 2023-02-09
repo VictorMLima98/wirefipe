@@ -15,6 +15,8 @@ class FipeInformation extends Component
     public function setFipe(array $fipe)
     {
         $this->fipe = $fipe;
+
+        $this->emitTo('loader', 'hideLoader');
     }
 
     public function render()

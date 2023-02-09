@@ -86,6 +86,8 @@ class VehicleChooser extends Component
             return;
         }
 
+        $this->emitTo('loader', 'showLoader');
+
         $fipe = collect(
             Cache::rememberForever(
                 "fipe::{$this->type}::{$this->brand}::{$this->model}::{$this->year}",

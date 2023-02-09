@@ -18,6 +18,8 @@
     </div>
 
     <x-footer />
+
+    <livewire:loader />
     
     <wireui:scripts />
     @vite('resources/js/app.js')
