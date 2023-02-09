@@ -16,7 +16,7 @@ class FipeInformation extends Component
     {
         $this->fipe = $fipe;
 
-        $this->emitTo('loader', 'hideLoader');
+        $this->dispatchBrowserEvent('hide-loader');
     }
 
     public function render()

@@ -23,8 +23,9 @@
             @endforeach
         </x-native-select>
     </div>
-    <div class="basis-full md:basis-1/4">
-        <x-native-select :disabled="$type === self::NOT_SELECTED || $brand === self::NOT_SELECTED || $model === self::NOT_SELECTED" class="!bg-secondary-900 text-primary-50 text-base md:!text-lg" wire:model="year">
+    <div class="basis-full md:basis-1/4" x-data>
+        <x-native-select :disabled="$type === self::NOT_SELECTED || $brand === self::NOT_SELECTED || $model === self::NOT_SELECTED" class="!bg-secondary-900 text-primary-50 text-base md:!text-lg" wire:model="year"
+            x-on:change="$dispatch('show-loader')">
             <option value="{{ self::NOT_SELECTED }}">Ano</option>
             @foreach ($years as $selectableYear)
                 <option value="{{ $selectableYear['id'] }}">{{ str($selectableYear['name'])->upper() }}</option>

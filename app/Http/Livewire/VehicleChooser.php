@@ -37,6 +37,8 @@ class VehicleChooser extends Component
             return;
         }
 
+        $this->reset('brand', 'brands', 'model', 'models', 'year', 'years');
+
         $this->brands = collect(Cache::rememberForever(
             "brands::{$this->type}",
             fn () => Fipe::ofType($this->type)->get()
@@ -51,6 +53,8 @@ class VehicleChooser extends Component
         if ($this->brand === self::NOT_SELECTED) {
             return;
         }
+
+        $this->reset('model', 'models', 'year', 'years');
 
         $this->models = collect(
             Cache::rememberForever(
@@ -69,6 +73,8 @@ class VehicleChooser extends Component
             return;
         }
 
+        $this->reset('year', 'years');
+
         $this->years = collect(
             Cache::rememberForever(
                 "years::{$this->type}::{$this->brand}::{$this->model}",
@@ -83,10 +89,10 @@ class VehicleChooser extends Component
     public function updatedYear(): void
     {
         if ($this->year === self::NOT_SELECTED) {
+            $this->dispatchBrowserEvent('hide-loader');
+
             return;
         }
-
-        $this->emitTo('loader', 'showLoader');
 
         $fipe = collect(
             Cache::rememberForever(
