@@ -27,7 +27,7 @@
                 </svg>
             </a>
         </div>
-        <p class="mt-10 text-center text-xs leading-5 text-secondary-50">&copy; 2023 Victor M. de Lima
+        <p class="mt-10 text-center text-xs leading-5 text-secondary-50">&copy; 2023 FIPE Agora. Desenvolvido por Victor M. Lima
         </p>
     </div>
 </footer>
