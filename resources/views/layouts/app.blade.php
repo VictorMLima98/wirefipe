@@ -26,6 +26,7 @@
         {{ $slot }}
     </div>
 
+    <x-notifications />
     <x-footer />
 
     <div class="fixed h-screen w-screen flex items-center justify-center bg-secondary-900/20 backdrop-blur-md overflow-hidden" x-data="{
