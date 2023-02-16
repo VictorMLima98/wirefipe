@@ -42,22 +42,21 @@ class VehicleChooser extends Component
 
         $this->reset('brand', 'brands', 'model', 'models', 'year', 'years');
 
-        try {
-            $this->brands = collect(Cache::rememberForever(
-                "brands::{$this->type}",
-                fn () => Fipe::ofType($this->type)->get()
-            ))->map(fn (array $brand) => [
-                'id'   => $brand['codigo'],
-                'name' => $brand['nome'],
-            ])->toArray();
-        } catch (\Throwable $th) {
-            report($th);
-
-            $this->notification()->error(
+        rescue(
+            function () {
+                $this->brands = collect(Cache::rememberForever(
+                    "brands::{$this->type}",
+                    fn () => Fipe::ofType($this->type)->get()
+                ))->map(fn (array $brand) => [
+                    'id'   => $brand['codigo'],
+                    'name' => $brand['nome'],
+                ])->toArray();
+            },
+            fn () => $this->notification()->error(
                 title: "Erro",
                 description: "Ocorreu um erro ao consultar as Marcas, por favor tente novamente."
-            );
-        }
+            )
+        );
     }
 
     public function updatedBrand(): void
@@ -68,24 +67,23 @@ class VehicleChooser extends Component
 
         $this->reset('model', 'models', 'year', 'years');
 
-        try {
-            $this->models = collect(
-                Cache::rememberForever(
-                    "models::{$this->type}::{$this->brand}",
-                    fn () => Fipe::ofType($this->type)->ofBrand($this->brand)->get()
-                )['modelos']
-            )->map(fn (array $model) => [
-                'id'   => $model['codigo'],
-                'name' => $model['nome'],
-            ])->toArray();
-        } catch (\Throwable $th) {
-            report($th);
-
-            $this->notification()->error(
+        rescue(
+            function () {
+                $this->models = collect(
+                    Cache::rememberForever(
+                        "models::{$this->type}::{$this->brand}",
+                        fn () => Fipe::ofType($this->type)->ofBrand($this->brand)->get()
+                    )['modelos']
+                )->map(fn (array $model) => [
+                    'id'   => $model['codigo'],
+                    'name' => $model['nome'],
+                ])->toArray();
+            },
+            fn () => $this->notification()->error(
                 title: "Erro",
                 description: "Ocorreu um erro ao consultar os Modelos, por favor tente novamente."
-            );
-        }
+            )
+        );
     }
 
     public function updatedModel(): void
@@ -96,24 +94,23 @@ class VehicleChooser extends Component
 
         $this->reset('year', 'years');
 
-        try {
-            $this->years = collect(
-                Cache::rememberForever(
-                    "years::{$this->type}::{$this->brand}::{$this->model}",
-                    fn () => Fipe::ofType($this->type)->ofBrand($this->brand)->ofModel($this->model)->get()
-                )
-            )->map(fn (array $year) => [
-                'id'   => $year['codigo'],
-                'name' => $year['nome'],
-            ])->toArray();
-        } catch (\Throwable $th) {
-            report($th);
-
-            $this->notification()->error(
+        rescue(
+            function () {
+                $this->years = collect(
+                    Cache::rememberForever(
+                        "years::{$this->type}::{$this->brand}::{$this->model}",
+                        fn () => Fipe::ofType($this->type)->ofBrand($this->brand)->ofModel($this->model)->get()
+                    )
+                )->map(fn (array $year) => [
+                    'id'   => $year['codigo'],
+                    'name' => $year['nome'],
+                ])->toArray();
+            },
+            fn () => $this->notification()->error(
                 title: "Erro",
                 description: "Ocorreu um erro ao consultar os Anos, por favor tente novamente."
-            );
-        }
+            )
+        );
     }
 
     public function updatedYear(): void
@@ -124,35 +121,34 @@ class VehicleChooser extends Component
             return;
         }
 
-        try {
-            $fipe = collect(
-                Cache::rememberForever(
-                    "fipe::{$this->type}::{$this->brand}::{$this->model}::{$this->year}",
-                    fn () => Fipe::ofType($this->type)->ofBrand($this->brand)->ofModel($this->model)->ofYear($this->year)->get()
-                )
-            );
+        rescue(
+            function () {
+                $fipe = collect(
+                    Cache::rememberForever(
+                        "fipe::{$this->type}::{$this->brand}::{$this->model}::{$this->year}",
+                        fn () => Fipe::ofType($this->type)->ofBrand($this->brand)->ofModel($this->model)->ofYear($this->year)->get()
+                    )
+                );
 
-            $sanitizedFipe = [];
+                $sanitizedFipe = [];
 
-            $sanitizedFipe['price']            = $fipe['Valor'];
-            $sanitizedFipe['brand']            = $fipe['Marca'];
-            $sanitizedFipe['model']            = $fipe['Modelo'];
-            $sanitizedFipe['year']             = $fipe['AnoModelo'];
-            $sanitizedFipe['fuel_id']          = $fipe['SiglaCombustivel'];
-            $sanitizedFipe['fuel_description'] = $fipe['Combustivel'];
-            $sanitizedFipe['fipe_id']          = $fipe['CodigoFipe'];
-            $sanitizedFipe['fipe_period']      = $fipe['MesReferencia'];
-            $sanitizedFipe['vehicle_type']     = $fipe['TipoVeiculo'];
+                $sanitizedFipe['price']            = $fipe['Valor'];
+                $sanitizedFipe['brand']            = $fipe['Marca'];
+                $sanitizedFipe['model']            = $fipe['Modelo'];
+                $sanitizedFipe['year']             = $fipe['AnoModelo'];
+                $sanitizedFipe['fuel_id']          = $fipe['SiglaCombustivel'];
+                $sanitizedFipe['fuel_description'] = $fipe['Combustivel'];
+                $sanitizedFipe['fipe_id']          = $fipe['CodigoFipe'];
+                $sanitizedFipe['fipe_period']      = $fipe['MesReferencia'];
+                $sanitizedFipe['vehicle_type']     = $fipe['TipoVeiculo'];
 
-            $this->emitTo('fipe-information', 'fipe::retrieved', $sanitizedFipe);
-        } catch (\Throwable $th) {
-            report($th);
-
-            $this->notification()->error(
+                $this->emitTo('fipe-information', 'fipe::retrieved', $sanitizedFipe);
+            },
+            fn () => $this->notification()->error(
                 title: "Erro",
                 description: "Ocorreu um erro ao consultar a Tabela FIPE, por favor tente novamente."
-            );
-        }
+            )
+        );
     }
 
     public function render(): View
