@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Exceptions\FipeUnknownTypeException;
 use Illuminate\Http\{JsonResponse, Response};
 use Illuminate\Support\Facades\Http;
 
@@ -31,11 +32,7 @@ class FipeApiService
 
     public function ofType(string $type): self
     {
-        if (!in_array($type, self::ACCEPTED_TYPES)) {
-            return new JsonResponse([
-                'message' => 'Invalid type.',
-            ], Response::HTTP_BAD_REQUEST);
-        }
+        throw_if(!in_array($type, self::ACCEPTED_TYPES), FipeUnknownTypeException::class);
 
         $this->type = $type;
 
