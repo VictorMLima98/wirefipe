@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Facades\Fipe;
-use App\Models\Brand;
+use App\Models\{Brand, Manufacturer, Type};
 use Illuminate\Console\Command;
 
 class ImportFipeData extends Command
@@ -14,18 +14,14 @@ class ImportFipeData extends Command
 
     public function handle(): void
     {
-        // wip
-        // collect([
-        //     'carros',
-        //     'motos',
-        //     'caminhoes',
-        // ])->each(function (string $type) {
-        //     $brands = collect(Fipe::ofType($type)->get())->map(fn (array $brand) => [
-        //         'code' => data_get($brand, 'codigo'),
-        //         'name' => data_get($brand, 'nome'),
-        //     ]);
+        Type::each(function (Type $type) {
+            $manufacturers = collect(Fipe::ofType($type->name)->get())->map(fn (array $brand) => [
+                'external_id' => data_get($brand, 'codigo'),
+                'name'        => data_get($brand, 'nome'),
+                'type_id'     => $type->id,
+            ])->toArray();
 
-        //     Brand::factory()->createMany($brands);
-        // });
+            Manufacturer::upsert($manufacturers, ['external_id'], ['name']);
+        });
     }
 }

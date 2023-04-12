@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Type;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -9,6 +10,8 @@ return new class () extends Migration {
     {
         Schema::create('manufacturers', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(Type::class);
+            $table->string('external_id')->unique();
             $table->string('name');
             $table->timestamps();
         });
