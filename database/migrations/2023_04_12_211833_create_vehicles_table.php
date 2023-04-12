@@ -11,8 +11,8 @@ return new class () extends Migration {
         Schema::create('vehicles', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Manufacturer::class);
+            $table->string('external_id')->unique();
             $table->string('name');
-            $table->string('fipe_code');
             $table->timestamps();
         });
     }

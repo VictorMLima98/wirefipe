@@ -10,11 +10,11 @@ class Vehicle extends Model
 {
     use HasFactory;
 
-    public const TYPE_CAR = 'car';
-
-    public const TYPE_BIKE = 'bike';
-
-    public const TYPE_TRUCK = 'truck';
+    protected $fillable = [
+        'manufacturer_id',
+        'external_id',
+        'name',
+    ];
 
     public function manufacturer(): BelongsTo
     {

@@ -11,7 +11,8 @@ return new class () extends Migration {
         Schema::create('vehicle_years', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Vehicle::class);
-            $table->string('fuel_type');
+            $table->string('external_id');
+            $table->string('code')->unique();
             $table->string('year');
             $table->timestamps();
         });
