@@ -9,7 +9,16 @@ class TypeFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->word(),
+            'name'        => $this->faker->word(),
+            'description' => $this->faker->words(2, asText: true),
         ];
+    }
+
+    public function car(): self
+    {
+        return $this->state([
+            'name'        => 'carros',
+            'description' => 'Carros',
+        ]);
     }
 }

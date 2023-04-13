@@ -23,11 +23,11 @@ class VehicleChooser extends Component
 
     public ?string $type = null;
 
-    public ?string $manufacturer = null;
+    public ?int $manufacturer = null;
 
-    public ?string $vehicle = null;
+    public ?int $vehicle = null;
 
-    public ?string $year = null;
+    public ?int $year = null;
 
     public function updatedType(): void
     {
@@ -108,11 +108,7 @@ class VehicleChooser extends Component
     private function submit(): void
     {
         try {
-            $year = VehicleYear::query()
-                ->with('vehicle.manufacturer.type')
-                ->findOrFail($this->year);
-
-            $this->emitTo('fipe-information', 'fipe::query', $year);
+            $this->emitTo('fipe-information', 'fipe::query', $this->year);
         } catch (Exception $e) {
             report($e);
 

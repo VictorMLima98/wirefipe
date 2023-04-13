@@ -3,7 +3,7 @@
         <x-native-select class="!bg-secondary-900 text-primary-50 text-base md:!text-lg" wire:model="type">
             <option value="{{ self::EMPTY_VALUE }}">Tipo</option>
             @foreach ($this->types as $selectableType)
-                <option value="{{ $selectableType->id }}">{{ str($selectableType->name)->upper() }}</option>
+                <option value="{{ $selectableType->id }}">{{ str($selectableType->description)->title() }}</option>
             @endforeach
         </x-native-select>
     </div>
