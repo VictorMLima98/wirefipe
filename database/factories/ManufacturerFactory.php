@@ -11,7 +11,7 @@ class ManufacturerFactory extends Factory
     {
         return [
             'type_id'     => Type::factory(),
-            'name'        => $this->faker->company(),
+            'name'        => str()->of($this->faker->company())->replace('\'', ''),
             'external_id' => uniqid(),
         ];
     }
