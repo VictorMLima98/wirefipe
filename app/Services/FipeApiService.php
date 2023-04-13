@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Dto\FipeData;
 use App\Exceptions\FipeUnknownTypeException;
 use Illuminate\Http\{JsonResponse, Response};
 use Illuminate\Support\Facades\Http;
@@ -60,7 +61,7 @@ class FipeApiService
         return $this;
     }
 
-    public function get(): JsonResponse | array
+    public function get(): JsonResponse | FipeData
     {
         try {
             $url = $this->buildUrl();
@@ -73,7 +74,17 @@ class FipeApiService
                 ], Response::HTTP_BAD_REQUEST);
             }
 
-            return $response;
+            return FipeData::from([
+                'id'           => $response['CodigoFipe'],
+                'price'        => $response['Valor'],
+                'manufacturer' => $response['Marca'],
+                'vehicle'      => $response['Modelo'],
+                'year'         => $response['AnoModelo'],
+                'fuelId'       => $response['SiglaCombustivel'],
+                'fuel'         => $response['Combustivel'],
+                'period'       => $response['MesReferencia'],
+                'type'         => $response['TipoVeiculo'],
+            ]);
         } catch (\Throwable $th) {
             report($th);
 

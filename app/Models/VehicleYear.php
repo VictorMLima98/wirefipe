@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\{BelongsTo, HasOne};
+use Illuminate\Database\Eloquent\Relations\{BelongsTo, HasMany, HasOne};
 
 class VehicleYear extends Model
 {
@@ -15,8 +15,8 @@ class VehicleYear extends Model
         return $this->belongsTo(Vehicle::class);
     }
 
-    public function price(): HasOne
+    public function prices(): HasMany
     {
-        return $this->hasOne(VehiclePrice::class);
+        return $this->hasMany(VehiclePrice::class);
     }
 }
