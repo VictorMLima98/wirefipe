@@ -108,4 +108,15 @@ class VehicleChooserTest extends TestCase
             ->set('year', $vehicleYear->id)
             ->assertEmittedTo('fipe-information', 'fipe::query', $vehicleYear->id);
     }
+
+    /** @test */
+    public function it_should_be_able_to_set_none_option(): void
+    {
+        Livewire::test(VehicleChooser::class)
+            ->set('type', VehicleChooser::NONE)
+            ->set('manufacturer', VehicleChooser::NONE)
+            ->set('vehicle', VehicleChooser::NONE)
+            ->set('year', VehicleChooser::NONE)
+            ->assertOk();
+    }
 }

@@ -93,7 +93,7 @@ class FipeApiService
         }
     }
 
-    private function buildUrl(): ?string
+    private function buildUrl(): string
     {
         $url = self::BASE_URL;
 

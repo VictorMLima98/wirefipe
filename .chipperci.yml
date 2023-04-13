@@ -20,6 +20,11 @@ pipeline:
       npm ci --no-audit
       npm run build
 
+  - name: Code Quality
+    cmd: |
+      ./vendor/bin/pint --test
+      ./vendor/bin/phpstan analyse
+
   - name: Run Tests
     cmd: |
       mysql -e "grant all privileges on *.* to chipperci@'%' with grant option;"

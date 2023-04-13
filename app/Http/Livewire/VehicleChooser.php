@@ -13,7 +13,7 @@ class VehicleChooser extends Component
 {
     use Actions;
 
-    public const EMPTY_VALUE = 'empty';
+    public const NONE = 'none';
 
     public const TYPE_CARS = 'carros';
 
@@ -21,17 +21,17 @@ class VehicleChooser extends Component
 
     public const TYPE_TRUCKS = 'caminhoes';
 
-    public ?string $type = null;
+    public string | int | null $type = null;
 
-    public ?int $manufacturer = null;
+    public string | int | null $manufacturer = null;
 
-    public ?int $vehicle = null;
+    public string | int | null $vehicle = null;
 
-    public ?int $year = null;
+    public string | int | null $year = null;
 
     public function updatedType(): void
     {
-        if ($this->type === self::EMPTY_VALUE) {
+        if ($this->type === self::NONE) {
             $this->reset('type');
         }
 
@@ -40,7 +40,7 @@ class VehicleChooser extends Component
 
     public function updatedManufacturer(): void
     {
-        if ($this->manufacturer === self::EMPTY_VALUE) {
+        if ($this->manufacturer === self::NONE) {
             $this->reset('manufacturer');
         }
 
@@ -49,7 +49,7 @@ class VehicleChooser extends Component
 
     public function updatedVehicle(): void
     {
-        if ($this->vehicle === self::EMPTY_VALUE) {
+        if ($this->vehicle === self::NONE) {
             $this->reset('vehicle');
         }
 
@@ -58,7 +58,7 @@ class VehicleChooser extends Component
 
     public function updatedYear(): void
     {
-        if ($this->year === self::EMPTY_VALUE) {
+        if ($this->year === self::NONE) {
             $this->dispatchBrowserEvent('hide-loader');
 
             return;
@@ -74,7 +74,7 @@ class VehicleChooser extends Component
 
     public function getManufacturersProperty(): Collection
     {
-        if ($this->type === self::EMPTY_VALUE) {
+        if ($this->type === self::NONE) {
             return collect([]);
         }
 
@@ -85,7 +85,7 @@ class VehicleChooser extends Component
 
     public function getVehiclesProperty(): Collection
     {
-        if ($this->manufacturer === self::EMPTY_VALUE) {
+        if ($this->manufacturer === self::NONE) {
             return collect([]);
         }
 
@@ -96,7 +96,7 @@ class VehicleChooser extends Component
 
     public function getYearsProperty(): Collection
     {
-        if ($this->vehicle === self::EMPTY_VALUE) {
+        if ($this->vehicle === self::NONE) {
             return collect([]);
         }
 
