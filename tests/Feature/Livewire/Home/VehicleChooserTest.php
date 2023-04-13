@@ -106,7 +106,7 @@ class VehicleChooserTest extends TestCase
 
         Livewire::test(VehicleChooser::class)
             ->set('year', $vehicleYear->id)
-            ->assertEmittedTo('fipe-information', 'fipe::query', $vehicleYear->id);
+            ->assertEmittedTo('home.fipe-information', 'fipe::query', $vehicleYear->id);
     }
 
     /** @test */

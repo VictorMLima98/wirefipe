@@ -108,7 +108,7 @@ class VehicleChooser extends Component
     private function submit(): void
     {
         try {
-            $this->emitTo('fipe-information', 'fipe::query', $this->year);
+            $this->emitTo('home.fipe-information', 'fipe::query', $this->year);
         } catch (Exception $e) {
             report($e);
 
