@@ -7,9 +7,12 @@ use App\Facades\Fipe;
 use App\Models\VehicleYear;
 use Exception;
 use Livewire\Component;
+use WireUi\Traits\Actions;
 
 class FipeInformation extends Component
 {
+    use Actions;
+
     protected ?FipeData $fipeData = null;
 
     public bool $show = false;

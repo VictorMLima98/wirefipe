@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Dto\FipeData;
 use App\Exceptions\FipeUnknownTypeException;
+use App\Models\VehicleYear;
 use Illuminate\Http\{JsonResponse, Response};
 use Illuminate\Support\Facades\Http;
 
@@ -113,5 +114,10 @@ class FipeApiService
         }
 
         return $url;
+    }
+
+    public static function buildFakeUrl(VehicleYear $year): string
+    {
+        return self::BASE_URL . "{$year->vehicle->manufacturer->type->name}/marcas/{$year->vehicle->manufacturer->external_id}/modelos/{$year->vehicle->external_id}/anos/{$year->external_id}";
     }
 }

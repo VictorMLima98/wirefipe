@@ -110,7 +110,6 @@ class VehicleChooser extends Component
         try {
             $this->emitTo('fipe-information', 'fipe::query', $this->year);
         } catch (Exception $e) {
-            throw $e;
             report($e);
 
             $this->dispatchBrowserEvent('hide-loader');

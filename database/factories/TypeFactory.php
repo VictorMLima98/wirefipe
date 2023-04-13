@@ -13,4 +13,12 @@ class TypeFactory extends Factory
             'description' => $this->faker->words(2, asText: true),
         ];
     }
+
+    public function car(): self
+    {
+        return $this->state([
+            'name'        => 'carros',
+            'description' => 'Carros',
+        ]);
+    }
 }
