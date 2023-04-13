@@ -1,5 +1,7 @@
 <p align="center"><a href="https://fipeagora.com.br" target="_blank"><img src="https://i.imgur.com/nfCScY5.png" width="400" alt="Laravel Logo"></a></p>
 
+[![Actions Status](https://github.com/VictorMLima98/wirefipe/workflows/wirefipe.yml/badge.svg)](https://github.com/VictorMLima98/wirefipe/actions)
+
 ## FIPE Agora
 
 FIPE Agora é um produto open-source que visa facilitar a vida dos brasileiros que necessitam pesquisar preços de veículos com rapidez e segurança.
