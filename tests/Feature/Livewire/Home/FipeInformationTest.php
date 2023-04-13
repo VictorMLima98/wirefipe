@@ -4,9 +4,8 @@ namespace Tests\Feature\Livewire;
 
 use App\Dto\FipeData;
 use App\Facades\Fipe;
-use App\Http\Livewire\FipeInformation;
+use App\Http\Livewire\Home\FipeInformation;
 use App\Models\{Manufacturer, Type, Vehicle, VehicleYear};
-use Illuminate\Foundation\Testing\{RefreshDatabase, WithFaker};
 use Illuminate\Support\Facades\Http;
 use Livewire\Livewire;
 use Tests\Mocks\Services\FipeApiServiceMock;

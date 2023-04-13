@@ -12,10 +12,6 @@ class Header extends Component
     {
         $this->links = [
             [
-                'label'  => 'Home',
-                'href'   => '#',
-                'active' => request()->is('/'),
-            ], [
                 'label'  => 'Carros',
                 'href'   => '#',
                 'active' => false,

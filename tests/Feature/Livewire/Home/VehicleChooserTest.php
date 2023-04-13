@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Livewire;
 
-use App\Http\Livewire\VehicleChooser;
+use App\Http\Livewire\Home\VehicleChooser;
 use App\Models\{Manufacturer, Type, Vehicle, VehicleYear};
 use Database\Seeders\TypeSeeder;
 use Livewire\Livewire;

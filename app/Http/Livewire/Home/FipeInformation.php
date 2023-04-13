@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Home;
 
 use App\Dto\FipeData;
 use App\Facades\Fipe;
@@ -54,6 +54,6 @@ class FipeInformation extends Component
 
     public function render()
     {
-        return view('livewire.fipe-information');
+        return view('livewire.home.fipe-information');
     }
 }

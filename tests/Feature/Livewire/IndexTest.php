@@ -2,7 +2,8 @@
 
 namespace Tests\Feature\Livewire;
 
-use App\Http\Livewire\{FipeInformation, Index, VehicleChooser};
+use App\Http\Livewire\Home\{FipeInformation, VehicleChooser};
+use App\Http\Livewire\Index;
 use Livewire\Livewire;
 use Tests\TestCase;
 

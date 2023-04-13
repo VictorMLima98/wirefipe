@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Home;
 
 use App\Models\{Manufacturer, Type, Vehicle, VehicleYear};
 use Exception;
@@ -123,6 +123,6 @@ class VehicleChooser extends Component
 
     public function render(): View
     {
-        return view('livewire.vehicle-chooser');
+        return view('livewire.home.vehicle-chooser');
     }
 }
