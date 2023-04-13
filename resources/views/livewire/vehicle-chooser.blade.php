@@ -1,34 +1,34 @@
-<div class="flex flex-wrap md:flex-nowrap py-8 gap-x-8 gap-y-4">
+<div class="flex flex-wrap py-8 md:flex-nowrap gap-x-8 gap-y-4">
     <div class="basis-full md:basis-1/4">
         <x-native-select class="!bg-secondary-900 text-primary-50 text-base md:!text-lg" wire:model="type">
-            <option value="{{ self::NOT_SELECTED }}">Tipo</option>
-            <option value="{{ self::TYPE_CARS }}">Carros</option>
-            <option value="{{ self::TYPE_BIKES }}">Motos</option>
-            <option value="{{ self::TYPE_TRUCKS }}">Caminhões</option>
-        </x-native-select>
-    </div>
-    <div class="basis-full md:basis-1/4">
-        <x-native-select :disabled="$type === self::NOT_SELECTED" class="!bg-secondary-900 text-primary-50 text-base md:!text-lg" wire:model="brand">
-            <option value="{{ self::NOT_SELECTED }}">Marca</option>
-            @foreach ($brands as $selectableBrand)
-                <option value="{{ $selectableBrand['id'] }}">{{ str($selectableBrand['name'])->upper() }}</option>
+            <option value="{{ self::EMPTY_VALUE }}">Tipo</option>
+            @foreach ($this->types as $selectableType)
+                <option value="{{ $selectableType->id }}">{{ str($selectableType->name)->upper() }}</option>
             @endforeach
         </x-native-select>
     </div>
     <div class="basis-full md:basis-1/4">
-        <x-native-select :disabled="$type === self::NOT_SELECTED || $brand === self::NOT_SELECTED" class="!bg-secondary-900 text-primary-50 text-base md:!text-lg" wire:model="model">
-            <option value="{{ self::NOT_SELECTED }}">Modelo</option>
-            @foreach ($models as $selectableModel)
-                <option value="{{ $selectableModel['id'] }}">{{ str($selectableModel['name'])->upper() }}</option>
+        <x-native-select :disabled="$type === null" class="!bg-secondary-900 text-primary-50 text-base md:!text-lg" wire:model="manufacturer">
+            <option value="{{ self::EMPTY_VALUE }}">Marca</option>
+            @foreach ($this->manufacturers as $selectableManufacturer)
+                <option value="{{ $selectableManufacturer->id }}">{{ str($selectableManufacturer->name)->upper() }}</option>
+            @endforeach
+        </x-native-select>
+    </div>
+    <div class="basis-full md:basis-1/4">
+        <x-native-select :disabled="$type === null || $manufacturer === null" class="!bg-secondary-900 text-primary-50 text-base md:!text-lg" wire:model="vehicle">
+            <option value="{{ self::EMPTY_VALUE }}">Modelo</option>
+            @foreach ($this->vehicles as $selectableVehicle)
+                <option value="{{ $selectableVehicle->id }}">{{ str($selectableVehicle->name)->upper() }}</option>
             @endforeach
         </x-native-select>
     </div>
     <div class="basis-full md:basis-1/4" x-data>
-        <x-native-select :disabled="$type === self::NOT_SELECTED || $brand === self::NOT_SELECTED || $model === self::NOT_SELECTED" class="!bg-secondary-900 text-primary-50 text-base md:!text-lg" wire:model="year"
+        <x-native-select :disabled="$type === null || $manufacturer === null || $vehicle === null" class="!bg-secondary-900 text-primary-50 text-base md:!text-lg" wire:model="year"
             x-on:change="$dispatch('show-loader')">
-            <option value="{{ self::NOT_SELECTED }}">Ano</option>
-            @foreach ($years as $selectableYear)
-                <option value="{{ $selectableYear['id'] }}">{{ str($selectableYear['name'])->upper() }}</option>
+            <option value="{{ self::EMPTY_VALUE }}">Ano</option>
+            @foreach ($this->years as $selectableYear)
+                <option value="{{ $selectableYear->id }}">{{ str($selectableYear->year)->upper() }}</option>
             @endforeach
         </x-native-select>
     </div>

@@ -2,8 +2,9 @@
 
 namespace App\Http\Livewire;
 
-use App\Facades\Fipe;
-use Illuminate\Support\Facades\Cache;
+use App\Models\{Manufacturer, Type, Vehicle, VehicleYear};
+use Exception;
+use Illuminate\Support\Collection;
 use Illuminate\View\View;
 use Livewire\Component;
 use WireUi\Traits\Actions;
@@ -12,7 +13,7 @@ class VehicleChooser extends Component
 {
     use Actions;
 
-    public const NOT_SELECTED = 'not_selected';
+    public const EMPTY_VALUE = 'empty';
 
     public const TYPE_CARS = 'carros';
 
@@ -20,135 +21,108 @@ class VehicleChooser extends Component
 
     public const TYPE_TRUCKS = 'caminhoes';
 
-    public ?string $type = self::NOT_SELECTED;
+    public ?string $type = null;
 
-    public ?string $brand = self::NOT_SELECTED;
+    public ?string $manufacturer = null;
 
-    public ?string $model = self::NOT_SELECTED;
+    public ?string $vehicle = null;
 
-    public ?string $year = self::NOT_SELECTED;
-
-    public array $brands = [];
-
-    public array $models = [];
-
-    public array $years = [];
+    public ?string $year = null;
 
     public function updatedType(): void
     {
-        if ($this->type === self::NOT_SELECTED) {
-            return;
+        if ($this->type === self::EMPTY_VALUE) {
+            $this->reset('type');
         }
 
-        $this->reset('brand', 'brands', 'model', 'models', 'year', 'years');
-
-        rescue(
-            function () {
-                $this->brands = collect(Cache::rememberForever(
-                    "brands::{$this->type}",
-                    fn () => Fipe::ofType($this->type)->get()
-                ))->map(fn (array $brand) => [
-                    'id'   => $brand['codigo'],
-                    'name' => $brand['nome'],
-                ])->toArray();
-            },
-            fn () => $this->notification()->error(
-                title: "Erro",
-                description: "Ocorreu um erro ao consultar as Marcas, por favor tente novamente."
-            )
-        );
+        $this->reset('manufacturer', 'vehicle', 'year');
     }
 
-    public function updatedBrand(): void
+    public function updatedManufacturer(): void
     {
-        if ($this->brand === self::NOT_SELECTED) {
-            return;
+        if ($this->manufacturer === self::EMPTY_VALUE) {
+            $this->reset('manufacturer');
         }
 
-        $this->reset('model', 'models', 'year', 'years');
-
-        rescue(
-            function () {
-                $this->models = collect(
-                    Cache::rememberForever(
-                        "models::{$this->type}::{$this->brand}",
-                        fn () => Fipe::ofType($this->type)->ofBrand($this->brand)->get()
-                    )['modelos']
-                )->map(fn (array $model) => [
-                    'id'   => $model['codigo'],
-                    'name' => $model['nome'],
-                ])->toArray();
-            },
-            fn () => $this->notification()->error(
-                title: "Erro",
-                description: "Ocorreu um erro ao consultar os Modelos, por favor tente novamente."
-            )
-        );
+        $this->reset('vehicle', 'year');
     }
 
-    public function updatedModel(): void
+    public function updatedVehicle(): void
     {
-        if ($this->model === self::NOT_SELECTED) {
-            return;
+        if ($this->vehicle === self::EMPTY_VALUE) {
+            $this->reset('vehicle');
         }
 
-        $this->reset('year', 'years');
-
-        rescue(
-            function () {
-                $this->years = collect(
-                    Cache::rememberForever(
-                        "years::{$this->type}::{$this->brand}::{$this->model}",
-                        fn () => Fipe::ofType($this->type)->ofBrand($this->brand)->ofModel($this->model)->get()
-                    )
-                )->map(fn (array $year) => [
-                    'id'   => $year['codigo'],
-                    'name' => $year['nome'],
-                ])->toArray();
-            },
-            fn () => $this->notification()->error(
-                title: "Erro",
-                description: "Ocorreu um erro ao consultar os Anos, por favor tente novamente."
-            )
-        );
+        $this->reset('year');
     }
 
     public function updatedYear(): void
     {
-        if ($this->year === self::NOT_SELECTED) {
+        if ($this->year === self::EMPTY_VALUE) {
             $this->dispatchBrowserEvent('hide-loader');
 
             return;
         }
 
-        rescue(
-            function () {
-                $fipe = collect(
-                    Cache::rememberForever(
-                        "fipe::{$this->type}::{$this->brand}::{$this->model}::{$this->year}",
-                        fn () => Fipe::ofType($this->type)->ofBrand($this->brand)->ofModel($this->model)->ofYear($this->year)->get()
-                    )
-                );
+        $this->submit();
+    }
 
-                $sanitizedFipe = [];
+    public function getTypesProperty(): Collection
+    {
+        return Type::all();
+    }
 
-                $sanitizedFipe['price']            = $fipe['Valor'];
-                $sanitizedFipe['brand']            = $fipe['Marca'];
-                $sanitizedFipe['model']            = $fipe['Modelo'];
-                $sanitizedFipe['year']             = $fipe['AnoModelo'];
-                $sanitizedFipe['fuel_id']          = $fipe['SiglaCombustivel'];
-                $sanitizedFipe['fuel_description'] = $fipe['Combustivel'];
-                $sanitizedFipe['fipe_id']          = $fipe['CodigoFipe'];
-                $sanitizedFipe['fipe_period']      = $fipe['MesReferencia'];
-                $sanitizedFipe['vehicle_type']     = $fipe['TipoVeiculo'];
+    public function getManufacturersProperty(): Collection
+    {
+        if ($this->type === self::EMPTY_VALUE) {
+            return collect([]);
+        }
 
-                $this->emitTo('fipe-information', 'fipe::retrieved', $sanitizedFipe);
-            },
-            fn () => $this->notification()->error(
+        return Manufacturer::query()
+            ->where('type_id', $this->type)
+            ->get();
+    }
+
+    public function getVehiclesProperty(): Collection
+    {
+        if ($this->manufacturer === self::EMPTY_VALUE) {
+            return collect([]);
+        }
+
+        return Vehicle::query()
+            ->where('manufacturer_id', $this->manufacturer)
+            ->get();
+    }
+
+    public function getYearsProperty(): Collection
+    {
+        if ($this->vehicle === self::EMPTY_VALUE) {
+            return collect([]);
+        }
+
+        return VehicleYear::query()
+            ->where('vehicle_id', $this->vehicle)
+            ->get();
+    }
+
+    private function submit(): void
+    {
+        try {
+            $year = VehicleYear::query()
+                ->with('vehicle.manufacturer.type')
+                ->findOrFail($this->year);
+
+            $this->emitTo('fipe-information', 'fipe::query', $year);
+        } catch (Exception $e) {
+            report($e);
+
+            $this->dispatchBrowserEvent('hide-loader');
+
+            $this->notification()->error(
                 title: "Erro",
                 description: "Ocorreu um erro ao consultar a Tabela FIPE, por favor tente novamente."
-            )
-        );
+            );
+        }
     }
 
     public function render(): View

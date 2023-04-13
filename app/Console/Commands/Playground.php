@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-use App\Services\FipeApiService;
 use Illuminate\Console\Command;
 
 class Playground extends Command
@@ -13,13 +12,6 @@ class Playground extends Command
 
     public function handle(): int
     {
-        $service = new FipeApiService();
-
-        $response = $service->ofType('motos')
-            ->get();
-
-        dd($response);
-
         return Command::SUCCESS;
     }
 }
