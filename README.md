@@ -1,6 +1,6 @@
 <p align="center"><a href="https://fipeagora.com.br" target="_blank"><img src="https://i.imgur.com/nfCScY5.png" width="400" alt="Laravel Logo"></a></p>
 
-[![Actions Status](https://github.com/VictorMLima98/wirefipe/workflows/wirefipe.yml/badge.svg)](https://github.com/VictorMLima98/wirefipe/actions)
+![Build Status](https://app.chipperci.com/projects/c1909657-4fd2-43e9-9d23-28164a2cbf0c/status/main)
 
 ## FIPE Agora
 
