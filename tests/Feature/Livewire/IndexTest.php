@@ -9,7 +9,7 @@ use Tests\TestCase;
 class IndexTest extends TestCase
 {
     /** @test */
-    public function the_component_can_render(): void
+    public function it_should_render_the_component(): void
     {
         Livewire::test(Index::class)
             ->assertStatus(200);
