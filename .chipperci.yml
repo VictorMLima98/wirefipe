@@ -21,4 +21,6 @@ pipeline:
       npm run build
 
   - name: Run Tests
-    cmd: php artisan test --parallel
+    cmd: |
+      mysql -e "grant all privileges on *.* to chipperci@'%' with grant option;"
+      php artisan test --parallel
