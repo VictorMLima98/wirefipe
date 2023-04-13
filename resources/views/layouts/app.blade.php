@@ -19,17 +19,17 @@
     @livewireStyles
 </head>
 
-<body class="antialiased bg-secondary-900 h-screen flex flex-col">
+<body class="flex flex-col h-screen antialiased bg-secondary-950">
     <x-header />
 
-    <div class="flex-grow">
+    <div class="container flex-grow mx-auto">
         {{ $slot }}
     </div>
 
     <x-notifications />
     <x-footer />
 
-    <div class="fixed h-screen w-screen flex items-center justify-center bg-secondary-900/20 backdrop-blur-md overflow-hidden" x-data="{
+    <div class="fixed flex items-center justify-center w-screen h-screen overflow-hidden bg-secondary-950/25 backdrop-blur-md" x-data="{
         show: false,
 
         init () {

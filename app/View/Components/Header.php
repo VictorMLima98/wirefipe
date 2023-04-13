@@ -12,9 +12,13 @@ class Header extends Component
     {
         $this->links = [
             [
+                'label'  => 'Home',
+                'href'   => route('index'),
+                'active' => request()->is('/'),
+            ], [
                 'label'  => 'Carros',
-                'href'   => '#',
-                'active' => false,
+                'href'   => route('cars.index'),
+                'active' => request()->is('cars'),
             ], [
                 'label'  => 'Motos',
                 'href'   => '#',

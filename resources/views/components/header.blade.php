@@ -1,4 +1,4 @@
-<nav class="shadow bg-secondary-900" x-data="{
+<nav class="shadow bg-secondary-900 shadow-secondary-950" x-data="{
     mobileMenu: false
 }">
     <div class="px-2 mx-auto max-w-7xl sm:px-6 lg:px-8">
@@ -14,9 +14,9 @@
                             d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                     </svg>
                 </button>
-                <div class="flex justify-end py-2">
+                <a class="flex justify-end flex-1 py-2" href="{{ route('index') }}">
                     <img class="object-fill w-1/2" src="{{ asset('assets/static/logo-no-background.svg') }}" alt="Logo">
-                </div>
+                </a>
             </div>
             <div class="flex items-center justify-center flex-1 sm:items-stretch sm:justify-start">
                 <div class="hidden text-lg sm:ml-6 sm:flex sm:space-x-8">

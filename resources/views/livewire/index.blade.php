@@ -1,4 +1,4 @@
-<div>
+<div class="m-12 rounded-lg shadow-sm">
     <div class="relative bg-primary-900">
         <div class="absolute inset-0">
             <img class="object-cover w-full h-full" src="{{ asset('assets/static/traffic.jpg') }}" alt="Background">

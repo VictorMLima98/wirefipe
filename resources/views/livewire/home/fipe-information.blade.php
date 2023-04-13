@@ -1,4 +1,4 @@
-<div class="overflow-hidden shadow bg-secondary-900 sm:rounded-lg" x-data="{
+<div class="overflow-hidden shadow bg-secondary-950 sm:rounded-lg" x-data="{
     show: @entangle('show')
 }" x-show="show" x-cloak x-transition>
     @if ($this->fipe)
