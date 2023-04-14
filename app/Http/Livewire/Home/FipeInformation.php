@@ -6,6 +6,7 @@ use App\Dto\FipeData;
 use App\Facades\Fipe;
 use App\Models\VehicleYear;
 use Exception;
+use Illuminate\View\View;
 use Livewire\Component;
 use WireUi\Traits\Actions;
 
@@ -52,7 +53,7 @@ class FipeInformation extends Component
         return $this->fipeData;
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.home.fipe-information');
     }
