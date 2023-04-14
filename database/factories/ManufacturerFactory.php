@@ -15,4 +15,11 @@ class ManufacturerFactory extends Factory
             'external_id' => uniqid(),
         ];
     }
+
+    public function featured(): self
+    {
+        return $this->state([
+            'featured' => true,
+        ]);
+    }
 }

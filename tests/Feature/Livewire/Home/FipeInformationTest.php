@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Livewire;
+namespace Tests\Feature\Livewire\Home;
 
 use App\Dto\FipeData;
 use App\Facades\Fipe;

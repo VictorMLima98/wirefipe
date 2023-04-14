@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Livewire;
+namespace Tests\Feature\Livewire\Home;
 
 use App\Http\Livewire\Home\VehicleChooser;
 use App\Models\{Manufacturer, Type, Vehicle, VehicleYear};

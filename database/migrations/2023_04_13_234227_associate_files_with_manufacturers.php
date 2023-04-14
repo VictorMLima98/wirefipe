@@ -33,8 +33,8 @@ return new class () extends Migration {
                 'file_path'       => storage_path('featured-manufacturers/vw.svg'),
             ],
         ])->each(function (array $data) {
-            Manufacturer::findOrFail($data['manufacturer_id'])
-                ->addMedia($data['file_path'])
+            Manufacturer::find($data['manufacturer_id'])
+                ?->addMedia($data['file_path'])
                 ->usingName('logo')
                 ->preservingOriginal()
                 ->toMediaCollection();
