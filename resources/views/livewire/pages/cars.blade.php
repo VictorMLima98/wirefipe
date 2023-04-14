@@ -8,7 +8,7 @@
             </div>
             <input type="text" 
                 id="cars-search" 
-                class="bg-secondary-900 border placeholder:text-secondary-200 border-primary-50 text-secondary-50 rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2.5" 
+                class="bg-secondary-900 border-none placeholder:text-secondary-200 text-secondary-50 rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2.5" 
                 wire:model.debounce.400ms='search'
                 placeholder="Pesquise qualquer Marca...">
         </div>
