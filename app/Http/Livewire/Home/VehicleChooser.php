@@ -80,6 +80,7 @@ class VehicleChooser extends Component
 
         return Manufacturer::query()
             ->where('type_id', $this->type)
+            ->orderBy('name')
             ->get();
     }
 
@@ -91,6 +92,7 @@ class VehicleChooser extends Component
 
         return Vehicle::query()
             ->where('manufacturer_id', $this->manufacturer)
+            ->orderBy('name')
             ->get();
     }
 
@@ -102,6 +104,7 @@ class VehicleChooser extends Component
 
         return VehicleYear::query()
             ->where('vehicle_id', $this->vehicle)
+            ->orderBy('year')
             ->get();
     }
 

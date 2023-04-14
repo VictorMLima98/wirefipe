@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\{BelongsTo, HasMany, HasManyThrough};
+use Illuminate\Database\Eloquent\{Builder, Model};
 
 class Vehicle extends Model
 {
@@ -21,7 +21,7 @@ class Vehicle extends Model
         return $this->belongsTo(Manufacturer::class);
     }
 
-    public function year(): HasMany
+    public function years(): HasMany
     {
         return $this->hasMany(VehicleYear::class);
     }
@@ -29,5 +29,10 @@ class Vehicle extends Model
     public function prices(): HasManyThrough
     {
         return $this->hasManyThrough(VehiclePrice::class, VehicleYear::class);
+    }
+
+    public function scopeOfManufacturer(Builder $query, Manufacturer $manufacturer): Builder
+    {
+        return $query->where('manufacturer_id', $manufacturer->id);
     }
 }
