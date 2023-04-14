@@ -31,6 +31,11 @@ class Vehicle extends Model
         return $this->hasManyThrough(VehiclePrice::class, VehicleYear::class);
     }
 
+    public function scopeSearch(Builder $query, string $search): Builder
+    {
+        return $query->where('name', 'like', "%{$search}%");
+    }
+
     public function scopeOfManufacturer(Builder $query, Manufacturer $manufacturer): Builder
     {
         return $query->where('manufacturer_id', $manufacturer->id);

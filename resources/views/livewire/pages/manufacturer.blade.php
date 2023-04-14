@@ -1,4 +1,4 @@
-<div class="flex flex-col m-12 rounded-lg shadow gap-y-8">
+<div class="flex flex-col m-12 rounded-lg shadow gap-y-8" x-data>
 
     <h1 class="text-5xl font-semibold tracking-wider text-secondary-50">
         {{ $manufacturer->name }}
@@ -23,4 +23,11 @@
             <x-vehicles.card :$vehicle />
         @endforeach
     </ul>
+
+    @if ($this->vehicles->hasMorePages())
+        <div class="rounded-lg" wire:loading wire:target='loadMore'>
+            <x-svg.loader  />
+        </div>
+        <div x-intersect="$wire.call('loadMore')"></div>
+    @endif
 </div>
