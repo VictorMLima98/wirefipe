@@ -4,11 +4,15 @@
 
 <li class="flex flex-col col-span-1 text-center divide-y rounded-lg shadow divide-primary-500 bg-secondary-900">
     <div class="flex flex-col items-center justify-end flex-1 p-8 gap-y-4">
-        <div>
-            <img class="h-24 mx-auto"
-                src="{{ $manufacturer->getLogo()?->getUrl() }}"
-                alt="{{ $manufacturer->name }} Logo">
-        </div>
+        @if ($logoUrl = $manufacturer->getLogo()?->getUrl())
+            <div>
+                <img class="h-24 mx-auto"
+                    src="{{ $logoUrl }}"
+                    alt="{{ $manufacturer->name }} Logo">
+            </div>
+        @else
+            <span class="flex-1 text-2xl font-semibold text-secondary-50">{{ $manufacturer->name }}</span>
+        @endif
         <div class="flex flex-col justify-between">
             <div class="text-sm text-secondary-200">
                 <span class="font-medium">{{ $manufacturer->vehicles_count }}</span> modelos

@@ -30,9 +30,19 @@ class Manufacturer extends Model implements HasMedia
         return $this->hasMany(Vehicle::class);
     }
 
-    public function scopeFeatured(Builder $query, Type $type): Builder
+    public function scopeOfType(Builder $query, Type $type): Builder
     {
-        return $query->where('type_id', $type->id)->where('featured', true);
+        return $query->where('type_id', $type->id);
+    }
+
+    public function scopeSearch(Builder $query, string $search): Builder
+    {
+        return $query->where('name', 'like', "%{$search}%");
+    }
+
+    public function scopeFeatured(Builder $query): Builder
+    {
+        return $query->where('featured', true);
     }
 
     public function registerMediaConversions(Media $media = null): void
